@@ -63,7 +63,7 @@ $('.our-top').owlCarousel({
     items:4,
     loop:true,
     margin:20,
-    autoplay: false,
+    autoplay: true,
     nav: false,
     dots: false,
     slideBy:1,
@@ -89,7 +89,7 @@ $('.our-top').owlCarousel({
     items:4,
     loop:true,
     margin:20,
-    autoplay: false,
+    autoplay: true,
     nav: false,
     dots: false,
     slideBy:1,
@@ -111,6 +111,33 @@ $('.our-top').owlCarousel({
   }
   })
 
+
+
+  $('.gallery-boxes').owlCarousel({
+    items:3,
+    loop:true,
+    margin:20,
+    autoplay: true,
+    nav: true,
+    dots: false,
+    slideBy:1,
+    smartSpeed:800,
+    autoplayTimeout: 3000,
+    rtl:false,
+    responsiveClass:true,
+    responsive:{
+      0:{
+          items:2,
+      },
+      600:{
+          items:2,
+          nav:false
+      },
+      1000:{
+          items:3,
+      }
+  }
+  })
 
 // //   home triangle
 
