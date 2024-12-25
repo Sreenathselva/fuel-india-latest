@@ -9,6 +9,11 @@ else if(window.scrollY <=56){
 }
 });
 
+window.addEventListener('load', function () {
+  const loader = document.getElementById('loader');
+  loader.classList.add('hidden');
+});
+
 function scrollToSection(event, sectionId) {
     event.preventDefault(); // Prevent default anchor behavior
     document.querySelector(sectionId).scrollIntoView({
@@ -88,7 +93,7 @@ $('.our-top').owlCarousel({
   $('.our-bot').owlCarousel({
     items:4,
     loop:true,
-    margin:20,
+    margin:40,
     autoplay: true,
     nav: false,
     dots: false,
@@ -137,27 +142,120 @@ $('.our-top').owlCarousel({
           items:3,
       }
   }
-  })
+  });
+  $('.test-boxes').owlCarousel({
+    items:3,
+    loop:true,
+    margin:20,
+    autoplay: true,
+    nav: true,
+    dots: false,
+    slideBy:1,
+    smartSpeed:800,
+    autoplayTimeout: 3000,
+    rtl:false,
+    responsiveClass:true,
+    responsive:{
+      0:{
+          items:2,
+      },
+      600:{
+          items:2,
+          nav:false
+      },
+      1000:{
+          items:3,
+      }
+  }
+  });
 
 // //   home triangle
 
-const cover = document.getElementById('overview');
-const tri1 = document.querySelector('.bg-tri1');
-const tri2 = document.querySelector('.bg-tri2');
+const tri1 = document.getElementById('home-tri1');
+const tri2 = document.getElementById('home-tri2');
 
-cover.addEventListener('mousemove', (e) => {
-    const { clientX, clientY } = e; // Get mouse position
-    const { width, height, left, top } = cover.getBoundingClientRect();
+// Function to update triangle positions based on mouse movement
+document.addEventListener('mousemove', (event) => {
+    const { clientX, clientY } = event;
 
-    // Normalize mouse coordinates within #cover
-    const x = (clientX - left) / width;
-    const y = (clientY - top) / height;
+    // Calculate translation values
+    const translateX1 = (clientX - window.innerWidth / 2) * 0.01;
+    const translateY1 = (clientY - window.innerHeight / 2) * 0.01;
 
-    // Calculate movement offset
-    const offsetX = (x - 0.5) * 20; // Scale the movement
-    const offsetY = (y - 0.5) * 20;
+    const translateX2 = (clientX - window.innerWidth / 2) * 0.02;
+    const translateY2 = (clientY - window.innerHeight / 2) * 0.02;
 
-    // Apply transformations to triangles
-    // tri1?.style?.transform = translate(`${offsetX}px, ${offsetY}px`);
-    // tri2?.style?.transform = translate(`${-offsetX}px, ${-offsetY}px`);
+    // Apply translations
+    tri1.style.transform = `translate(${translateX1}px, ${translateY1}px)`;
+    tri2.style.transform = `translate(${translateX2}px, ${translateY2}px)`;
 });
+
+
+
+// Parallax Effect 
+const parallaxElements = document.querySelectorAll(".parallax");
+
+window.addEventListener("scroll", function () {
+  let offset = window.pageYOffset;
+
+  parallaxElements.forEach(function (element) {
+    let speed = parseFloat(element.getAttribute("data-speed")) || 0.07;
+    element.style.backgroundPositionY = -(offset * speed) + "px"; // Negative value
+  });
+});
+
+
+
+// Function to add "navActive" class to the clicked link
+function setActiveLink(element) {
+    document.querySelectorAll('.nav-ul a').forEach(link => link.classList.remove('navActive'));
+    element.classList.add('navActive');
+  }
+  
+  // Function for smooth scrolling to the section
+  
+  
+  // Click event handler for navigation links
+  document.querySelectorAll('.nav-ul a').forEach(link => {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      
+      var sectionId = link.getAttribute('href');
+      setActiveLink(link);
+      scrollToSection(sectionId);
+  
+      // Reset the clickHandled flag after a short delay
+      setTimeout(() => clickHandled = false, 300);
+    });
+  });
+  
+  // Listen for scroll events to update the "navActive" class
+  document.addEventListener('DOMContentLoaded', function () {
+    checkActiveSection();
+  
+    document.addEventListener('scroll', checkActiveSection);
+  });
+  
+  // Function to check and set "navActive" class for the active section
+  function checkActiveSection() {
+    var scrollPosition = window.scrollY;
+    var windowHeight = window.innerHeight;
+  
+    document.querySelectorAll('.nav-ul a').forEach(link => {
+      var section = document.querySelector(link.getAttribute('href'));
+  
+      if (section) {
+        var sectionTop = section.offsetTop;
+        var sectionBottom = sectionTop + section.offsetHeight;
+  
+        if ((sectionTop >= scrollPosition && sectionTop <= scrollPosition + windowHeight) || (sectionBottom >= scrollPosition && sectionBottom <= scrollPosition + windowHeight)) {
+          setActiveLink(link);
+        } else {
+          link.classList.remove('navActive');
+        }
+      }
+    });
+  }
+  
+
+  
