@@ -44,6 +44,43 @@ function scrollToSection(event, sectionId) {
     });
   });
 
+// toggle button
+let menuIcon = document.querySelector(".menu-icon");
+let lines = Array.from(menuIcon.children);
+let navbar = document.getElementById("navbar");
+
+function toggleMenu() {
+  lines.forEach(line => {
+    menuIcon.classList.toggle("active");
+    line.classList.toggle("active");
+    line.classList.toggle("no-animation");
+  });
+
+  // Toggle the position of the navbar
+  navbar.style.left = (navbar.style.left === "0px") ? "-110vw" : "0";
+}
+function scrollToSection(sectionId) {
+  if (window.innerWidth<528) {
+    navbar.style.left = (navbar.style.left === "0") ? "-110vw" : "0";
+    toggleMenu();
+    navbar.classList.remove('navbar-container');
+    console.log("toggled 1st time");
+    lines.forEach(line => {
+      menuIcon.classList.remove("active");
+      line.classList.remove("active");
+      line.classList.remove("no-animation");
+    });
+  }
+  document.querySelector(sectionId).scrollIntoView({ behavior: 'smooth' });
+ 
+
+}
+function handleClickOnMenuIcon() {
+  // Simulate a click event on the .menu-icon
+  toggleMenu();
+}
+
+menuIcon.addEventListener("click", toggleMenu);
 
      // JavaScript to handle the slideshow
      
@@ -78,10 +115,10 @@ $('.our-top').owlCarousel({
     responsiveClass:true,
     responsive:{
       0:{
-          items:2,
+          items:3,
       },
       600:{
-          items:2,
+          items:3,
           nav:false
       },
       1000:{
@@ -104,10 +141,10 @@ $('.our-top').owlCarousel({
     responsiveClass:true,
     responsive:{
       0:{
-          items:2,
+          items:3,
       },
       600:{
-          items:2,
+          items:3,
           nav:false
       },
       1000:{
@@ -148,7 +185,7 @@ $('.our-top').owlCarousel({
     loop:true,
     margin:20,
     autoplay: true,
-    nav: true,
+    nav: false,
     dots: false,
     slideBy:1,
     smartSpeed:800,
@@ -157,7 +194,7 @@ $('.our-top').owlCarousel({
     responsiveClass:true,
     responsive:{
       0:{
-          items:2,
+          items:1,
       },
       600:{
           items:2,
